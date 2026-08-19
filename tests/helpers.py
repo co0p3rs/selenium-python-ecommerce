@@ -7,6 +7,8 @@ from utils.popup_handler import PopupHandler
 def login_standard_user(driver, base_url: str) -> InventoryPage:
     login = LoginPage(driver)
     login.open(base_url)
+    driver.execute_script("window.localStorage.clear();")
+    driver.refresh()
     PopupHandler(driver).close_optional_popups()
     login.login(STANDARD_USER, PASSWORD)
     inventory = InventoryPage(driver)

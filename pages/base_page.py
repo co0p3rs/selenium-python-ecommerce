@@ -16,8 +16,8 @@ class BasePage:
         element.clear()
         element.send_keys(value)
 
-    def text(self, locator: tuple[str, str]) -> str:
-        return self.wait.until(conditions.visibility_of_element_located(locator)).text
+    def texts(self, locator: tuple[str, str]) -> list[str]:
+        return [element.text for element in self.driver.find_elements(*locator)]
 
     def texts(self, locator: tuple[str, str]) -> list[str]:
         return [element.text for element in self.wait.until(conditions.presence_of_all_elements_located(locator))]
