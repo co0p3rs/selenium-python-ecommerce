@@ -12,7 +12,9 @@ class BasePage:
         self.wait.until(conditions.element_to_be_clickable(locator)).click()
 
     def fill(self, locator: tuple[str, str], value: str) -> None:
-        element = self.wait.until(conditions.visibility_of_element_located(locator))
+        element = self.wait.until(
+            conditions.visibility_of_element_located(locator)
+        )
         element.clear()
         element.send_keys(value)
 
@@ -22,8 +24,7 @@ class BasePage:
         ).text
 
     def texts(self, locator: tuple[str, str]) -> list[str]:
-        return [element.text for element in self.driver.find_elements(*locator)]
-
-    def texts(self, locator: tuple[str, str]) -> list[str]:
-        return [element.text for element in self.wait.until(conditions.presence_of_all_elements_located(locator))]
-
+        return [
+            element.text
+            for element in self.driver.find_elements(*locator)
+        ]
