@@ -9,7 +9,14 @@ class BasePage:
         self.wait = WebDriverWait(driver, timeout)
 
     def click(self, locator: tuple[str, str]) -> None:
-        self.wait.until(conditions.element_to_be_clickable(locator)).click()
+        element = self.wait.until(
+            conditions.element_to_be_clickable(locator)
+        )
+        self.driver.execute_script(
+        "arguments[0].scrollIntoView({block: 'center'});",
+            element,
+        )
+        self.driver.execute_script("arguments[0].click();", element)
 
     def fill(self, locator: tuple[str, str], value: str) -> None:
         element = self.wait.until(
