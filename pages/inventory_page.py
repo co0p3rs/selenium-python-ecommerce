@@ -46,4 +46,12 @@ class InventoryPage(BasePage):
 
     def open_cart(self) -> None:
         self.click(self.CART)
+        self.wait.until(conditions.url_contains("cart.html"))
+        self.wait.until(
+            conditions.text_to_be_present_in_element(
+                (By.CSS_SELECTOR, "[data-test='title']"),
+                "Your Cart",
+            )
+        )
+    
 
