@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as conditions
 
 from pages.base_page import BasePage
 
@@ -12,11 +13,23 @@ class CartPage(BasePage):
         return self.texts(self.NAMES)
 
     def remove(self, product_slug: str) -> None:
-        self.click((By.CSS_SELECTOR, f"[data-test='remove-{product_slug}']"))
+        locator = (
+            By.CSS_SELECTOR,
+            f"[data-test='remove-{product_slug}']",
+        )
+        self.click(locator)
+        self.wait.until(
+            conditions.invisibility_of_element_located(locator)
+        )
 
     def checkout(self) -> None:
         self.click(self.CHECKOUT)
+        self.wait.until(
+            conditions.url_contains("checkout-step-one.html")
+        )
 
     def continue_shopping(self) -> None:
         self.click(self.CONTINUE)
-
+        self.wait.until(
+            conditions.url_contains("inventory.html")
+        )
